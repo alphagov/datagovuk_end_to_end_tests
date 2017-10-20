@@ -1,0 +1,26 @@
+{
+  "name": "dgu-tester",
+  "version": "1.0.0",
+  "description": "End-to-end tests for data.gov.uk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datagovuk/dgu-tester.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/datagovuk/dgu-tester/issues"
+  },
+  "homepage": "https://github.com/datagovuk/dgu-tester#readme",
+  "dependencies": {
+    "chromedriver": "^2.33.1",
+    "cypress": "^1.0.2",
+    "nightwatch": "^0.9.16"
+  }
+}
