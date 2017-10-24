@@ -14,8 +14,8 @@ describe('Synchronisation tests', () => {
     cy.contains('Sign in').click()
 
     cy.contains('h1', 'Sign in')
-    cy.get('input[id=user_email]').type('publisher@example.com')
-    cy.get('input[id=user_password]').type('password')
+    cy.get('#user_email').type('publisher@example.com')
+    cy.get('#user_password').type('password')
     cy.get('input[type=submit]').click()
 
     cy.contains('h1', 'Tasks')
@@ -24,24 +24,24 @@ describe('Synchronisation tests', () => {
     cy.contains('Create a dataset').click()
 
     cy.contains('h1', 'Create a dataset')
-    cy.get('input[id=id_title').type(testDatasetName)
-    cy.get('textarea[id=id_summary]').type('A disposable dataset created for testing sync')
+    cy.get('#id_title').type(testDatasetName)
+    cy.get('#id_summary').type('A disposable dataset created for testing sync')
     cy.contains('Save and continue').click()
 
     cy.contains('h1', 'Choose a licence for this dataset')
-    cy.get('input[id=id_licence_uk-ogl]').click()
+    cy.get('#id_licence_uk-ogl').click()
     cy.contains('Save and continue').click()
 
     cy.contains('h1', 'Choose a geographical area')
     cy.contains('Skip this step').click()
 
     cy.contains('h1', 'How frequently is this dataset updated?')
-    cy.get('input[id=id_frequency_never]').click()
+    cy.get('#id_frequency_never').click()
     cy.contains('Save and continue').click()
 
     cy.contains('h1', 'Add a link to your data')
-    cy.get('input[id=id_url]').type(testDatafileUrl)
-    cy.get('input[id=id_name]').type('some test datafile')
+    cy.get('#id_url').type(testDatafileUrl)
+    cy.get('#id_name').type('some test datafile')
     cy.contains('Save and continue').click()
 
     cy.contains('h1', 'Links to your data')
