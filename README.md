@@ -13,8 +13,9 @@ Set the following environment variables:
 
 * `CYPRESS_FIND_URL`: where Find is (eg, http://localhost:3000)
 * `CYPRESS_PUBLISH_URL`: where Publish is (eg, http://localhost:3000)
-* `CYPRESS_LEGACY_URL`: where Legacy is (eg, http://test.data.gov.uk)
-
+* `CYPRESS_LEGACY_URL`: where Legacy is (eg, http://user:password@test.data.gov.uk)
+* `CYPRESS_LEGACY_USERNAME`: the user name of the publisher on Legacy
+* `CYPRESS_LEGACY_PASSWORD`: the password of the publisher on Legacy
 
 ## Running the tests
 
