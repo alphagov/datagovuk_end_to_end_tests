@@ -5,11 +5,7 @@ const legacyUsername = Cypress.env('LEGACY_USERNAME')
 const legacyPassword = Cypress.env('LEGACY_PASSWORD')
 const testDatafileUrl = 'https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/269519/gov-uk_domain_names_as_at_1_October_2013.csv'
 
-const publishSyncBetaUrl = 'http://localhost:3000/api/sync_beta'
-
-const date = new Date().toISOString()
-const testDatasetName = `legacy dataset ${date}`
-const createDatasetOnLegacy = (testDatasetName) => {
+const createDatasetOnLegacy = (datasetName) => {
   cy.visit(legacyUrl)
   cy.contains('h1', 'Browse data by theme')
   cy.contains('Log in').click()
@@ -21,7 +17,8 @@ const createDatasetOnLegacy = (testDatasetName) => {
   cy.contains('Publisher tools').click()
   cy.contains('Add a Dataset').click()
   cy.contains('h1', 'Add a Dataset')
-  cy.get('#title').type(testDatasetName)
+  cy.get('#title').type(datasetName)
+  cy.log('Created dataset with ' + datasetName)
   cy.get('#next-button').click()
 
   cy.contains('h3', 'Data Files')
@@ -43,30 +40,28 @@ const createDatasetOnLegacy = (testDatasetName) => {
 }
 
 const triggerSync = () => {
-  cy.request(publishSyncBetaUrl)
+  cy.request(`${publishUrl}/api/sync-beta`)
     .then(res => {
       expect(res.status).to.eq(200)
     })
+  cy.wait(6000)
 }
 
-const findDatasetOnBeta = (testDatasetName) => {
-  cy.visit(findUrl)
-  cy.get('.dgu-filters__apply-button').click()
-  cy.contains('h1', 'Find government data')
-  cy.get('#q').type(testDatasetName)
-  cy.get('.dgu-search-box__button').click()
-  cy.contains('h2',testDatasetName)
+const findDatasetOnBeta = (date, testDatasetName) => {
+  // Note that you are not allowed to visit more than one unique domain in a single test hence why we are using cy.request instead. See https://docs.cypress.io/guides/guides/web-security.html#Cross-Origin-Iframes
+  cy.request(`${findUrl}/use-of-data/confirm`)
+  cy.request(`${findUrl}/search?q=awesome+dataset+${date}`)
+    .its('body')
+    .should('match', new RegExp(`<a[^>]*>${testDatasetName}<\/a>`))
 }
 
 describe('Synchronisation tests', () => {
   it('it synchronises a dataset from Legacy to Publish Beta', () => {
-    createDatasetOnLegacy(testDatasetName)
-    cy.wait(6000)
-    triggerSync()
-  })
+    const date = new Date().toISOString()
+    const testDatasetName = `awesome dataset ${date}`
 
-  // Note that Cypress does not allow a call to be made to more than one service in a single test, hence why searching on find is in a separate test
-  it('finds the synchronised dataset on Find Beta', () => {
-    findDatasetOnBeta(testDatasetName)
+    createDatasetOnLegacy(testDatasetName)
+    triggerSync()
+    findDatasetOnBeta(date, testDatasetName)
   })
 })
