@@ -59,6 +59,7 @@ typings/
 
 # editors, tools and IDEs
 .tern-port
+.idea/
 
 # Cypress
 cypress/videos
