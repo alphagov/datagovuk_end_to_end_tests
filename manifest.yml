@@ -1,0 +1,8 @@
+---
+applications:
+  - name: dgu-tester
+    memory: 256M
+    buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+    env:
+      RAILS_ENV: staging
+    health-check-type: process
